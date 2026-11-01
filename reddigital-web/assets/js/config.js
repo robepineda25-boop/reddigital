@@ -3,5 +3,5 @@
    Aquí no se pone ninguna clave privada, contraseña ni token de API.
    Reemplace G-XXXXXXXXXX por su ID real (GA4 > Administrar > Flujos de datos > Web). */
 window.RD_CONFIG = {
-  GA_MEASUREMENT_ID: "G-XXXXXXXXXX"
+  GA_MEASUREMENT_ID: "G-6KJC6TS0JZ"
 };
