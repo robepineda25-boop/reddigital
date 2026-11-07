@@ -3,6 +3,8 @@
 Sitio estático (HTML, CSS y JavaScript, sin dependencias ni paso de compilación) para Red Digital Honduras.
 Pensado para publicarse en **Netlify** conectado a un repositorio de **GitHub**.
 
+Todo el sitio está en la carpeta `reddigital-web/`. Las rutas de archivos de este documento (`index.html`, `assets/js/config.js`, etc.) son relativas a esa carpeta. Este README está fuera de ella a propósito, para que no se publique en el sitio.
+
 ## Estructura
 
 ```
