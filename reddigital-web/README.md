@@ -25,17 +25,27 @@ reddigital-web/
     └── img/              Imágenes WebP + JPG de respaldo, logo SVG, imagen para redes (og-image.jpg)
 ```
 
-## Publicar gratis (sin dominio propio, ~20 minutos)
+## Cómo está publicado
 
-Dirección del sitio: **https://reddigitalhn.netlify.app** (gratis, con HTTPS incluido).
+Dirección del sitio: **https://reddigitalhn.netlify.app** (gratis, con HTTPS incluido). Publicado desde el 2026-11-01.
 
-1. **GitHub:** cree el repositorio `reddigital-web` → en la página vacía, enlace **uploading an existing file** → arrastre TODO el contenido de esta carpeta (no la carpeta en sí) → **Commit changes**. En la raíz del repositorio debe verse `index.html`.
-2. **Netlify:** app.netlify.com → **Sign up with GitHub** → **Add new project → Import an existing project → GitHub** → elija `reddigital-web`.
-3. **Configuración:** *Project name* `reddigitalhn` · *Branch* `main` · *Build command* vacío · *Publish directory* vacío → **Deploy**. Si `reddigitalhn` ya está tomado, elija otro nombre y cámbielo también en los `.html`, `sitemap.xml` y `robots.txt` (busque `reddigitalhn.netlify.app`).
-4. **Formulario:** **Forms → Enable form detection**, luego **Deploys → Trigger deploy → Deploy project**. Después **Forms → Form notifications → Add notification → Email** con su correo.
-5. **Google Analytics 4:** pegue su ID `G-…` en `assets/js/config.js` (en GitHub: abrir el archivo → lápiz → **Commit changes**).
+| Qué | Valor |
+|---|---|
+| Repositorio | `robepineda25-boop/reddigital` en GitHub, rama `main`. El sitio está en la subcarpeta `reddigital-web/` |
+| Proyecto de Netlify | `reddigitalhn` |
+| *Base directory* | `reddigital-web` |
+| *Build command* | vacío (no hay paso de compilación) |
+| *Publish directory* | `.` (lo fija `netlify.toml`, relativo a `reddigital-web`) |
+| Formulario | Netlify Forms, formulario `contacto`, con notificación por correo |
+| Google Analytics 4 | ID en `assets/js/config.js` |
 
-Cada cambio que guarde en GitHub vuelve a publicar el sitio en uno o dos minutos.
+Cada `git push` a `main` vuelve a publicar el sitio en uno o dos minutos.
+
+### Si hay que volver a conectarlo en Netlify
+
+1. app.netlify.com → **Add new project → Import an existing project → GitHub** → elija `reddigital`.
+2. *Branch* `main` · *Base directory* `reddigital-web` · *Build command* vacío → **Deploy**. Si el nombre `reddigitalhn` ya no está disponible, cambie la dirección en los `.html`, `sitemap.xml` y `robots.txt` (busque `reddigitalhn.netlify.app`).
+3. **Forms → Enable form detection**, luego **Deploys → Trigger deploy → Deploy project**. Después **Forms → Form notifications → Add notification → Email** con su correo.
 
 ### Cuando compre un dominio
 Netlify → **Domain management → Add a domain**, apunte el DNS como le indique Netlify y reemplace `https://reddigitalhn.netlify.app` por el dominio nuevo en los `.html`, `sitemap.xml` y `robots.txt`.
