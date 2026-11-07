@@ -40,11 +40,12 @@ Cada cambio que guarde en GitHub vuelve a publicar el sitio en uno o dos minutos
 ### Cuando compre un dominio
 Netlify → **Domain management → Add a domain**, apunte el DNS como le indique Netlify y reemplace `https://reddigitalhn.netlify.app` por el dominio nuevo en los `.html`, `sitemap.xml` y `robots.txt`.
 
-## Pendientes antes de publicar
+## Pendientes
 
-- [ ] `privacidad.html` y `terminos.html`: reemplace **[RAZÓN SOCIAL O NOMBRE DEL TITULAR]**, **[RTN]**, **[DIRECCIÓN, CIUDAD]** y **[CIUDAD]**, y pida a un abogado hondureño que revise ambos textos.
-- [ ] `assets/js/config.js`: ID real de GA4.
-- [ ] Al publicar: registrar el sitio en Google Search Console y enviar `https://reddigitalhn.netlify.app/sitemap.xml`.
+- [x] `privacidad.html` y `terminos.html`: razón social, RTN y dirección completos (2026-11-01).
+- [x] `assets/js/config.js`: ID real de GA4 (`G-6KJC6TS0JZ`).
+- [x] Google Search Console verificado con la etiqueta `google-site-verification` de `index.html`. No la borre.
+- [ ] Pedir a un abogado hondureño que revise `privacidad.html` y `terminos.html`.
 
 ## Lista de control (20 puntos)
 
