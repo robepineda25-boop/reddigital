@@ -176,3 +176,10 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--erro
 .link-btn-dark{color:var(--petroleo)}
 .calc-fields .field{justify-content:space-between}
 .notfound .code{color:var(--teal)}
+
+/* Aparición suave al bajar: main.js agrega .reveal solo si la persona no pidió reducir movimiento */
+@media (prefers-reduced-motion:no-preference){
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.reveal.visible{opacity:1;transform:none}
+}
+.calc-results .value{font-variant-numeric:tabular-nums}

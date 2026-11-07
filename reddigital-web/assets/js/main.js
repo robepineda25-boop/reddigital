@@ -3,6 +3,9 @@
   "use strict";
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+  // Animaciones solo si la persona no pidió reducir el movimiento y el navegador lo permite.
+  var animar = !(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) &&
+    "IntersectionObserver" in window && "requestAnimationFrame" in window;
 
   /* ---------- Año del pie ---------- */
   var anio = $("#anio");
@@ -30,12 +33,14 @@
   if (calc) {
     var num = function (id) { var v = parseFloat($(id).value); return isFinite(v) && v > 0 ? v : 0; };
     var fmt = function (n) { return Math.round(n).toLocaleString("es-HN"); };
+    var costoMes = 0, contando = false;
     var update = function () {
+      contando = false;
       var minutos = num("#c-min"), veces = num("#c-veces"), personas = num("#c-personas");
       var salario = num("#c-salario"), retrabajo = Math.min(num("#c-retrabajo"), 100) / 100;
       var costoHora = salario * 14 / 12 * 1.10 / 190.5;
       var horasMes = minutos * veces * personas * (1 + retrabajo) * 4.33 / 60;
-      var costoMes = horasMes * costoHora;
+      costoMes = horasMes * costoHora;
       $("#r-hora").textContent = "L " + fmt(costoHora);
       $("#r-horas").textContent = fmt(horasMes);
       $("#r-mes").textContent = "L " + fmt(costoMes);
@@ -44,6 +49,58 @@
     calc.addEventListener("input", update);
     calc.addEventListener("submit", function (e) { e.preventDefault(); });
     update();
+
+    // La primera vez que se ven los resultados, el costo al mes y al año suben de 0 a la cifra.
+    var resultados = $(".calc-results");
+    if (animar && resultados) {
+      var subir = function () {
+        var inicio = performance.now(), duracion = 900;
+        contando = true;
+        resultados.setAttribute("aria-busy", "true"); // que el lector de pantalla no lea cada número intermedio
+        $("#r-mes").textContent = "L 0";
+        $("#r-anio").textContent = "L 0";
+        var paso = function (ahora) {
+          if (!contando) { resultados.removeAttribute("aria-busy"); return; } // la persona ya está escribiendo
+          var p = Math.min((ahora - inicio) / duracion, 1), avance = 1 - Math.pow(1 - p, 3);
+          $("#r-mes").textContent = "L " + fmt(costoMes * avance);
+          $("#r-anio").textContent = "L " + fmt(costoMes * 12 * avance);
+          if (p < 1) { requestAnimationFrame(paso); return; }
+          contando = false;
+          resultados.removeAttribute("aria-busy");
+        };
+        requestAnimationFrame(paso);
+      };
+      var vigiaCalc = new IntersectionObserver(function (entradas) {
+        if (!entradas[0].isIntersecting) return;
+        vigiaCalc.disconnect();
+        subir();
+      }, { threshold: 0.6 });
+      vigiaCalc.observe(resultados);
+    }
+  }
+
+  /* ---------- Aparición suave al bajar (sin librerías) ---------- */
+  if (animar) {
+    var bloques = $$(".lead-quote, .section .wrap > .eyebrow, .section .wrap > h2, .grid > *, " +
+      ".calc-intro, .calc-box, .about > *, .faq > details, .contact > *");
+    var vigia = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("visible");
+        vigia.unobserve(e.target);
+      });
+    }, { rootMargin: "0px 0px -8% 0px" });
+    var alto = window.innerHeight;
+    bloques.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < alto && r.bottom > 0) return; // lo que ya se ve al cargar no se esconde
+      el.classList.add("reveal");
+      var padre = el.parentNode;
+      if (padre.classList.contains("grid")) {
+        el.style.transitionDelay = (Array.prototype.indexOf.call(padre.children, el) * 80) + "ms";
+      }
+      vigia.observe(el);
+    });
   }
 
   /* ---------- Formulario de contacto: validación + antispam ---------- */
