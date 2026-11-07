@@ -90,10 +90,14 @@
         vigia.unobserve(e.target);
       });
     }, { rootMargin: "0px 0px -8% 0px" });
+    // Primero se miden todos los bloques y después se cambian, para que el navegador calcule la página una sola vez.
     var alto = window.innerHeight;
-    bloques.forEach(function (el) {
+    var yaVisibles = bloques.map(function (el) {
       var r = el.getBoundingClientRect();
-      if (r.top < alto && r.bottom > 0) return; // lo que ya se ve al cargar no se esconde
+      return r.top < alto && r.bottom > 0;
+    });
+    bloques.forEach(function (el, i) {
+      if (yaVisibles[i]) return; // lo que ya se ve al cargar no se esconde
       el.classList.add("reveal");
       var padre = el.parentNode;
       if (padre.classList.contains("grid")) {
