@@ -69,7 +69,6 @@ p{margin:0;text-wrap:pretty}
 .eyebrow{font-size:16px;font-weight:700;color:var(--teal)}
 .hero .eyebrow,.dark .eyebrow{color:var(--teal-claro)}
 .hero h1{color:var(--blanco);font-size:clamp(34px,6vw,56px);line-height:1.08}
-.hero h1 span{color:var(--coral)}
 .hero-sub{font-size:clamp(17px,2.2vw,19px);color:var(--texto-claro);font-weight:600}
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
 @media (min-width:900px){
