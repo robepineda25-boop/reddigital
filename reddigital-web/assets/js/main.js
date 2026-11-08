@@ -54,7 +54,7 @@
     var resultados = $(".calc-results");
     if (animar && resultados) {
       var subir = function () {
-        var inicio = performance.now(), duracion = 900;
+        var inicio = performance.now(), duracion = 600;
         contando = true;
         resultados.setAttribute("aria-busy", "true"); // que el lector de pantalla no lea cada número intermedio
         $("#r-mes").textContent = "L 0";
@@ -82,7 +82,7 @@
   /* ---------- Aparición suave al bajar (sin librerías) ---------- */
   if (animar) {
     var bloques = $$(".lead-quote, .section .wrap > .eyebrow, .section .wrap > h2, .grid > *, " +
-      ".calc-intro, .calc-box, .about > *, .faq > details, .contact > *");
+      ".calc-intro, .calc-box, .about > *"); // el formulario y las preguntas no se animan: la gente llega a leerlos o a escribir
     var vigia = new IntersectionObserver(function (entradas) {
       entradas.forEach(function (e) {
         if (!e.isIntersecting) return;
@@ -101,7 +101,7 @@
       el.classList.add("reveal");
       var padre = el.parentNode;
       if (padre.classList.contains("grid")) {
-        el.style.transitionDelay = (Array.prototype.indexOf.call(padre.children, el) * 80) + "ms";
+        el.style.transitionDelay = (Array.prototype.indexOf.call(padre.children, el) * 50) + "ms";
       }
       vigia.observe(el);
     });
